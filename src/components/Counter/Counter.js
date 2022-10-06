@@ -1,7 +1,7 @@
 import {useState} from "react"
 import Button from "../Button/Button"
 
-const Counter = () => {
+const Counter = ( {children }) => {
     const initial= 0
 const [count, setCount] = useState(initial)
 
@@ -19,10 +19,11 @@ const [count, setCount] = useState(initial)
     }
     return (
         <div>
+            {children}
             <h1> {count} </h1>
-            <button onClick={decrement}>Restar</button>
-            <button onClick={increment}>Sumar</button>
-            <button onClick={reset}>Reset</button>
+            <button onClick={decrement}>-</button>
+            <button onClick={increment}>+</button>
+            <button onClick={reset}>Agregar al carrito</button>
         </div>
     )
 }
