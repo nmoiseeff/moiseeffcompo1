@@ -6,6 +6,7 @@ const Button = ({label, background, action}) => {
                     className= "Button"
                     style={{ 
                             background: background,
+                         
                             
                             
                         }}

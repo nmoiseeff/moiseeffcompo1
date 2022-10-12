@@ -7,9 +7,9 @@ const Navbar = () => {
             <h1>Ecommerce</h1>
         </div>
         <div>
-            <button>Productos 1</button>
-            <button>Productos 2</button>
-            <button>Productos 3</button>
+            <button>Celulares</button>
+            <button>Tablets</button>
+            <button>Notebooks</button>
         </div>
         <div>
             <CartWidget />

@@ -1,31 +1,57 @@
-import {useState, useEffect} from "react"
-import {getProducts} from "../../asyncMock"
-import { Link } from "react-router-dom"
+import { useState, useEffect } from 'react'
+import { getProducts } from '../../asyncMock'
+import ItemList from '../ItemList/ItemList'
+import { useParams } from 'react-router-dom'
+import { getProductsByCategory } from '../../asyncMock'
 
-const ItemListContainer = ({ greetings }) => {
+const ItemListContainer = ({ greeting }) => {
     const [products, setProducts] = useState([])
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
 
-    useEffect (() => {getProducts().then(response=> {setProducts(response)
-    })
-}, [])
+    const { categoryId } = useParams()
+    console.log(categoryId)
 
-console.log(products)
+    useEffect(() => {
+        if(!categoryId) {
+            getProducts().then(res => {
+                console.log(res)
+                setProducts(res)
+            }).catch(error => {
+                console.log(error)
+                setError(true)
+            }).finally(() => {
+                setLoading(false)
+            })
+        } else {
+            getProductsByCategory(categoryId).then(res => {
+                console.log(res)
+                setProducts(res)
+            }).catch(error => {
+                console.log(error)
+                setError(true)
+            }).finally(() => {
+                setLoading(false)
+            })
+        }
+    }, [categoryId])
+
+    // const productosTransformados = products.map(product => <li key={product.id}>{product.name}</li>)
+    if(loading) {
+        return <h1>Loading...</h1>
+    }
+    
+
+    if(error) {
+        return <h1>Hubo un error</h1>
+    }
+
 
     return (
-    <div> 
-        <h1>{greetings}</h1>
-        <div>
-            { products.map(prod=> (
-                <div key= {prod.id}>
-                    <h1>{prod.name}</h1>
-                    <h2>$ {prod.price} </h2>
-                    <link to={`/detail/${prod.id}`}>
-                        <button> ver detalle </button>
-                        </link>
-                </div>))}
-           
+        <div className="ItemListContainer">
+            <h1>{greeting}</h1>
+            <ItemList products={products}/>
         </div>
-    </div> 
     )
 }
 
